@@ -56,6 +56,12 @@ class CompletionExecutor:
         # 필요에 따라 반환 혹은 다른 처리 가능
         return store_data
 
+def load_prompt(file_name):
+    prompt_file_path = os.path.join('prompts', file_name)
+    with open(prompt_file_path, 'r', encoding='utf-8') as f:
+        prompt_text = f.read()
+    return prompt_text
+
 
 def ask_llm_corpus(query: str, prompt_text: str, completion_executor) -> str:
     """
@@ -65,43 +71,12 @@ def ask_llm_corpus(query: str, prompt_text: str, completion_executor) -> str:
 
     이 함수를 통해 'assistant_content'만 반환
     """
+    
+    # 프롬프트 불러오기
+    completion_prompt = load_prompt("completion_prompt.txt")
+    completion_prompt = completion_prompt.format(prompt_text=prompt_text)
 
-    preset_text = [
-        {
-            "role": "system",
-            "content": f"""당신은 조선왕조실록 전문가입니다.
-            <작업 지시>
-            아래에 제공된 문서 내용(토픽: '{query}')을 바탕으로, 정확하고 구체적인 역사적 배경을 구성해 주세요.
-            **하나의 단락**으로 작성하되, 총 **800자에서 1000자** 사이가 되어야 합니다.
-            글을 시작할 때, **연도나 시점을 언급**하여 시간정보를 제공하세요.
-            **문서를 직접 해설**하듯이, 섹션 구분 없이 자연스럽게 이어지는 문장들로 구성해 주세요.
-            **문서에 언급된 인물(예: 세종, 태종, 장영실 등), 사건(훈민정음 창제, 왕세자 대리청정 등), 연도(1443년, 1436년 등), 제도, 구체적 일화** 등을 반드시 포함하십시오.
-            문서에 나오는 **인용구**(예: "내가 두 눈이 흐릿하고 깔깔하며...")나 **출처**(예: [세종실록] 92권, 23년(1441)...)를 적절히 활용하여, 추상적 요약이 아닌 **구체적 사례**를 들어주세요.
-            **시간 흐름 순서**에 따라 독자가 이해하기 쉽게 기술하십시오.
-            **문서 밖의 추측이나 다른 출처 내용은 추가하지 말고**, 주어진 문서 정보만 기반으로 정확히 작성해주세요.
-            만약 문서에 실린 조선왕조실록 및 한국사 내용과 '{query}'의 실제 내용이 상충되는 정보가 있다면, 해당 내용은 **무시**하십시오.
-
-
-            """
-        },
-        {
-            "role": "user",
-            "content": f'''문서: {prompt_text}
-
-            반드시 답변은 800글자에서 1000글자 사이의 줄글형식으로 해주세요.
-
-            예시 : 세종 25년(1443년), 세종은 독서광으로 한시도 손에서 책을 놓지 않았다. 그러던 어느 날, 세종은 심한 몸살로 열이 펄펄 끓으면서도 책을 읽었고, 이 모습을 본 아버지 태종이 그의 책을 모두 거둬오라는 명을 내린다. 하지만 세종은 병풍 틈에 숨겨놓은 책 한 권을 발견하고선 그 책만 수없이 반복해 읽었다.\r\n
-            세종은 일 중독자로, 지나치게 높은 학구열과 격무로 인해 40대에 건강이 안좋아진다. 특히 시력이 급격히 떨어져, '내가 두 눈이 흐릿하고 깔깔하며 아파, 봄부터는 음침하고 어두운 곳은 지팡이가 아니고는 걷기가 어려웠다.' 라는 기록이 남아있을 정도였다.\r\n
-            하지만 세종은 왕세자에게 결재권을 넘겨주고 자신은 현업에서 물러나겠다는 뜻을 내비쳤음에도 불구하고, 여전히 격무를 수행했다. 오히려 몸이 아플 때, 더욱 놀라운 업적을 쌓으니, 그게 바로 '훈민정음' 창제였다.\r\n
-            1443년, 세종은 백성을 지극히 사랑하는 마음으로 한글을 창조했다. 당시 지배층들은 글을 읽고 쓰는 것을 자신들의 특권으로 여겼지만, 세종은 이를 원치 않았다. 일반 백성들은 글을 모르니 학문을 익힐 수 없었고, 그로 인해 어리석은 죄를 저지르게 되는 것이 싫었던 것이다.  \r\n
-            한글은 누구나 쉽게 배우고 쓸 수 있으며, 자기의 의사를 마음대로 표현할 수 있을 뿐만 아니라, 글자를 만드는 원리가 매우 과학적인 뛰어난 문자이다. 실록에서는 한글의 창제원리에 대한 언급이 없지만, 1940년에 발견된 훈민정음 해례본 에 한글 창제원리가 자세히 적혀 있다. \r\n
-            세종은 한글을 보급하기 위해 용비어천가, 석보상절, 월인천강지곡 등의 책을 한글로 출판하였다.  이처럼 지칠 줄 모르는 학구열을 지닌 세종은 몸이 아파도 멈추지 않고, 백성을 사랑하는 마음으로 한글을 창제했다. 1443년에 이루어진 이 업적은 누구나 쉽게 글을 배울 수 있도록 하여, 당시 백성들의 삶을 크게 바꾸었다. 정인지 등의 학자들이 한글 책과 해설서를 보급하며 '슬기로운 이는 하루아침에도 깨치고, 어리석은 이도 열흘이면 배운다'는 말을 현실로 만들었다. 그 결과 한글은 오늘날까지도 독창성과 과학성을 인정받는 소중한 문화유산으로 남아 있다.\r\n
-
-            답변:
-
-            '''
-        }
-    ]
+    preset_text = json.loads(completion_prompt)
 
     request_data = {
         'messages': preset_text,
@@ -130,6 +105,7 @@ def ask_llm_corpus(query: str, prompt_text: str, completion_executor) -> str:
     assistant_content = parsed_response["message"]["content"]
 
     return assistant_content
+
 
 
 def convert_part_to_kkokkomu(part, tokenizer, persona_model):
@@ -198,25 +174,12 @@ def convert_part_to_kkokkomu(part, tokenizer, persona_model):
             continue
 
         # 2) 각 문장마다 프롬프트 생성
-        prompt = f"""너는 대한민국의 원본 문장의 말투를 바꾸는 최고의 해설자야.
-        너의 역할은 원본 문장의 주어진 내용을 절대 변경하지 않고, 말투만 바꾸는 것이야.
-        절대 내용을 바꾸면 안 돼! 정보를 그대로 유지하면서 말투만 변환해야 해.
-
-        말투 변환 방식:
-        - 무조건 반말을 사용해야 해.
-        - 정보를 나열하는 방식이 아니라, 이야기를 하듯이 자연스럽게 말해야 해.
-        - 실제 해설자가 말하는 것처럼 이어서 서술해야 해.
-        - 반전, 감탄사, 청중의 호응을 이끌어내는 표현을 추가해야 해.
-        - 너는 영어를 배운 적이 없어. 절대 영어를 사용하지 마.
-
-        예시는 다음과 같아:
-
-        """
+        base_prompt = load_prompt("kkkomu_prompt.txt")
 
         # Few-shot 예제 추가
         for example in few_shot_examples:
-            prompt += f"원본: {example['input']}\n"
-            prompt += f"말투 변환: {example['output']}\n\n"
+            prompt = base_prompt + f"원본: {example['input']}\n"
+            prompt = base_prompt +  f"말투 변환: {example['output']}\n\n"
 
         # 변환할 '한 문장' 추가
         prompt += f"""이제 아래 한 문장 원본을 말투 변환된 스타일로 바꿔줘:
@@ -350,6 +313,8 @@ def generate_story_segment(
     persona_model: AutoModelForCausalLM = None
 ) -> str:
     
+    base_prompt = load_prompt("kkkomu_prompt.txt")
+
     reaction_few_shot = [
     {
         "user": "헉, 진짜 실화야?",
@@ -393,25 +358,8 @@ def generate_story_segment(
     }
     ]
     
-    prompt = f"""
-    # 이전 해설자 응답 (맥락):
-    {prev_assistant_response}
+    prompt = base_prompt.format(prev_assistant_response=prev_assistant_response, user_response=user_response)
 
-    # 사용자 반응:
-    {user_response}
-
-    너는 이야기를 계속 들려주는 해설자야. 사용자의 반응이 질문이면 간단히 확인하거나 맞장구쳐 주고,
-    감정 표현이면 짧게 공감해 줘.
-
-    조건:
-    - 반말
-    - 문장 끝에 감탄사나 여운
-    - 최대 10자 이내, 한 문장
-    - 절대 영어 쓰지 마
-    - 대화 흐름을 자연스럽게 이어가
-
-    아래는 참고 예시:
-    """
 
     # Few-shot 예시 추가 (reaction_few_shot 등)
     for ex in reaction_few_shot:
