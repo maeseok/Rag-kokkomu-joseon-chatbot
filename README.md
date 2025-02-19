@@ -83,7 +83,7 @@
 
 
 ### 2. flowchart
-![플로우 차트](./images/flowchart.png)
+![플로우 차트](./images/flowchart.JPG)
 
 
 ### 3. 동영상 데모 (사진을 클릭해주세요)
