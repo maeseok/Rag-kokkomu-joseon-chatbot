@@ -57,7 +57,7 @@ class CompletionExecutor:
         return store_data
 
 
-def ask_exaone_corpus(query: str, prompt_text: str, completion_executor) -> str:
+def ask_llm_corpus(query: str, prompt_text: str, completion_executor) -> str:
     """
     query: 사용자 질문(예: "동학 농민 운동")
     prompt_text: RAG로 검색한 문서 정보를 합쳐서 만든 텍스트(build_prompt의 결과 등)
@@ -326,7 +326,7 @@ def generate_story_outline(user_input, max_parts=5, tokenizer=None, persona_mode
         )
     prompt_text = build_prompt(final_docs, user_input)
 
-    text = ask_exaone_corpus(user_input, prompt_text, completion_executor)
+    text = ask_llm_corpus(user_input, prompt_text, completion_executor)
 
 #     text = """
 # """
