@@ -1,5 +1,7 @@
 # KoKoJo-4o-mini | 꼬리에 꼬리를 무는 조선왕조실톡
 
+
+
 ## 🌟 **Project Overview | 프로젝트 개요**
 이 프로젝트는 진입장벽이 높은 한국사를 쉽게 접근할 수 있도록 참여형 스토리텔링 방식을 활용하는 꼬꼬무 스타일의 RAG 기반 챗봇입니다. 사용자가 특정 주제에 대한 질문을 던지면, 챗봇이 RAG 모델을 활용하여 꼬꼬무 형식으로 이야기를 구성해 제공합니다.
 
@@ -33,14 +35,16 @@
 ## 📁 **Key Directories and Files | 주요 디렉토리 및 파일**
 
 📁 project-root/      
+│── 📂 images/         # 이미지 디렉토리  
 │── 📂 models/         # 프로젝트 모델 및 RAG  
 │── 📂 scripts/        # 모델 성능 평가  
+│── 📂 temp/           # 최종 합본 ipynb  
 │── 📂 web/            # Gradio 웹 인터페이스  
-│── 📂 images/         # 이미지 디렉토리  
-│── 📄 main.py          # 프로젝트 실행 진입점  
-│── 📄 requirements.txt # 프로젝트 전체 의존성 정의  
-│── 📄 README.md        # 프로젝트 개요 및 설명  
+│── 📄 .gitignore       # 제외할 파일 
 │── 📄 LICENSE          # MIT 라이선스 정보 
+│── 📄 main.py          # 프로젝트 실행 진입점  
+│── 📄 README.md        # 프로젝트 개요 및 설명  
+│── 📄 requirements.txt # 프로젝트 전체 의존성 정의  
 
 ---
 
@@ -75,7 +79,7 @@
 ## 📽️ Demonstration | 데모 시연
 
 ### 1. 결과 페이지
-![결과 페이지](./images/Feedback.jpg)
+![결과 페이지](./images/Page.png)
 
 
 ### 2. Flowchart
