@@ -81,12 +81,7 @@
 ### 1. 결과 페이지
 ![결과 페이지](./images/Page.png)
 
-
-### 2. Flowchart
-![플로우 차트](./images/Flowchart.JPG)
-
-
-### 3. 동영상 데모 (사진을 클릭해주세요)
+### 2. 동영상 데모 (사진을 클릭해주세요)
 [![데모 시연](./images/demo_screen.JPG)](https://www.youtube.com/watch?v=IgEfCTvjx6E)
 
 ---
@@ -99,7 +94,7 @@
 
 ---
 
-## 📖 ** Model evaluation | 성능 평가 결과**
+## 📖 **Model evaluation | 성능 평가 결과**
 
 
 
