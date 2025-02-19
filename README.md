@@ -59,11 +59,12 @@
 2. **Install required packages | 필수 패키지 설치**:
     ```bash
     pip install -r requirements.txt
+    cd ./web
     ```
 
 3. **Run the main script | 실행**:
     ```bash
-    python ./main.py
+    python ./web/app.py
     ```
 
 ---
