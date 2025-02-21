@@ -4,6 +4,7 @@
 
 이 프로젝트는 진입장벽이 높은 한국사를 쉽게 접근할 수 있도록 참여형 스토리텔링 방식을 활용하는 꼬꼬무 스타일의 RAG 기반 챗봇입니다. 사용자가 특정 주제에 대한 질문을 던지면, 챗봇이 RAG 모델을 활용하여 꼬꼬무 형식으로 이야기를 구성해 제공합니다.
 
+![타임 라인](./images/timeline.JPG)
 ---
 
 ## 🧑‍🤝‍🧑 **Team Members | 팀원**
@@ -94,7 +95,7 @@
 
 ### 3. 동영상 데모 (사진을 클릭해주세요)
 
-[![데모 시연](./images/demo_screen.JPG)](https://www.youtube.com/watch?v=IgEfCTvjx6E)
+[![데모 시연](./images/demo_screen.JPG)](https://www.youtube.com/watch?v=adOHLlN0u68)
 
 ---
 
