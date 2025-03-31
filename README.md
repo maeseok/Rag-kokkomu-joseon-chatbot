@@ -110,7 +110,7 @@
 ---
 
 ## 📖 **Model evaluation | 성능 평가 결과 및 설명**
-[📄 분석 링크](https://blog.naver.com/mae_seok/223767784897docs: update prompts in README)  
+[📄 분석 링크](https://blog.naver.com/mae_seok/223767784897)  
 ## 📜 **License | 라이선스**
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.  
